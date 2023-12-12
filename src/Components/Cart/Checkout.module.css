@@ -1,7 +1,6 @@
 .form {
     margin: 1rem 0;
-    height: 19rem;
-    overflow: auto;
+    height: 15rem;
   }
   
   .control {
@@ -23,35 +22,33 @@
   }
   
   .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+    text-align: right;
   }
   
   .actions button {
     font: inherit;
-    color: #5a1a01;
     cursor: pointer;
     background-color: transparent;
-    border: none;
+    border: 1px solid #8a2b06;
+    padding: 0.5rem 2rem;
     border-radius: 25px;
-    padding: 0.5rem 2rem; 
+    margin-left: 1rem;
   }
   
   .actions button:hover,
   .actions button:active {
-    background-color: #ffe6dc;
-  }
-  
-  .actions .submit {
-    border: 1px solid #5a1a01;
     background-color: #5a1a01;
+    border-color: #5a1a01;
     color: white;
   }
   
-  .actions .submit:hover,
-  .actions .submit:active {
-    background-color: #7a2706;
+  .actions .button--alt {
+    color: #8a2b06;
+  }
+  
+  .actions .button {
+    background-color: #8a2b06;
+    color: white;
   }
   
   .invalid label {
@@ -61,4 +58,8 @@
   .invalid input {
     border-color: #aa0b20;
     background-color: #ffeff1;
+  }
+
+  .error-text{
+    color: red;
   }

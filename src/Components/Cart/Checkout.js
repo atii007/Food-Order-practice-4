@@ -1,30 +1,76 @@
 import React from "react";
+
 import classes from "./Checkout.module.css";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import TextError from "../Utils/TextError";
+
+const initialValues = {
+  name: "",
+  phone: "",
+  address: "",
+};
+
+const validationSchema = Yup.object({
+  name: Yup.string().required("Name Required"),
+  phone: Yup.string().required("Phone Number Required"),
+  address: Yup.string().required("Address Required"),
+});
+
 const Checkout = (props) => {
+  const onSubmit = (values) => {
+    console.log("form data", values);
+    props.onConfirm({
+      name: values.name,
+      phone: values.phone,
+      address: values.address,
+    });
+  };
   return (
-    <form>
-      <div className={classes.control}>
-        <label htmlFor="name">Name</label>
-        <input name="name" id="name" type="text" />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="phone">Phone Number</label>
-        <input name="phone" id="phone" type="number" />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="address">Address</label>
-        <input name="address" id="address" type="text" />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="code">Postal Code</label>
-        <input name="code" id="code" type="number" />
-      </div>
-      <div>
-        <button type="submit" className={classes["form-actions"]}>
-          Checkout
-        </button>
-      </div>
-    </form>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => onSubmit(values)}
+      validationSchema={validationSchema}
+    >
+      {(formik) => {
+        return (
+          <Form className={classes.form}>
+            <div className={classes.control}>
+              <label htmlFor="name">Name</label>
+              <Field name="name" id="name" type="text" />
+              <ErrorMessage name="name" component={TextError} />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="phone">Phone Number</label>
+              <Field name="phone" id="phone" type="text" />
+              <ErrorMessage name="phone" component={TextError} />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="address">Address</label>
+              <Field name="address" id="address" type="text" />
+              <ErrorMessage name="address" component={TextError} />
+            </div>
+
+            <div className={classes.actions}>
+              <button
+                type="button"
+                className={classes["button--alt"]}
+                onClick={props.onCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className={classes.button}
+                type="submit"
+                disabled={!formik.isValid}
+              >
+                Confirm
+              </button>
+            </div>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 
